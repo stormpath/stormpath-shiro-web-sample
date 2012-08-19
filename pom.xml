@@ -71,19 +71,12 @@
         <dependency>
             <groupId>com.stormpath.shiro</groupId>
             <artifactId>stormpath-shiro-core</artifactId>
-            <version>0.2.0-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <!-- Use the Shiro version from this pom's parent, not the one automatic one: -->
-                    <groupId>org.apache.shiro</groupId>
-                    <artifactId>shiro-core</artifactId>
-                </exclusion>
-            </exclusions>
+            <version>0.2.0</version>
         </dependency>
         <dependency>
             <groupId>com.stormpath.sdk</groupId>
             <artifactId>stormpath-sdk-httpclient</artifactId>
-            <version>0.4.0-SNAPSHOT</version>
+            <version>0.4.0</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
