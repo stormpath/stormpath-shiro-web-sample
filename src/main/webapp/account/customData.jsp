@@ -26,7 +26,7 @@
 
 <table width="100%">
 <tr>
-    <td><a href="<c:url value="/account/index.jsp"/>">Return to the account page</a></td>
+    <td><a href="<c:url value="/home.jsp"/>">Return to the home page</a></td>
     <td><a href="<c:url value="/logout"/>">Log out</a></td>
 </tr>
 </table>
@@ -34,16 +34,17 @@
 
 <br/><br/><br/>
 
+<!-- Table used to add data to the account's custom data. If the key does not exists in the custom data, then
+it will be added to it. If the key already exists, the value will be appended to the existing values -->
 <table id="newCustomFieldTable" width="80%" border="1" rules="none">
     <tr>
         <td>Key : <input type="text" id="newKey" name="newKey" size="50%"/> </td>
         <td>Value : <input type="text" id="newValue" name="newValue" size="50%"/> </td>
-        <td align="center"><button id="newCustomDataFieldButton" type="submit">Add Custom Data</button></td>
+        <td align="right"><button id="newCustomDataFieldButton" type="submit">Append Custom Data</button></td>
     </tr>
 </table>
 
 <br/><br/>
-
 
 <h3>Custom Data Fields</h3>
 
@@ -68,40 +69,47 @@
     </tbody>
 </table>
 
-
-
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript">
+    //New custom data will be added using this jQuery call.
     $(document).ready(function() {
         $("#newCustomDataFieldButton").click(function(){
             key = $("#newKey").val();
             value = $("#newValue").val();
-            accountId = "<%=request.getAttribute("accountId")%>"
+            accountId = "${accountId}"
             var targetUrl = "/account/customData/"+accountId;
-            $.ajax({
-                type: 'POST',
+            if (key == "" || key.indexOf(" ") != -1) {
+                alert("Custom data keys cannot be empty nor contain spaces")
+                return
+            }
+            if (value == "") {
+                alert("Custom data velues cannot be empty")
+                return
+            }
+            var response = $.ajax({ type: 'POST',
                 url: targetUrl,
-                //contentType:'application/json; charset=utf-8',
-                //dataType:"json",
-                data: { 'key': key.valueOf(), 'value': value },
-                success: function(data, textStatus, jqXHR) {
-                    $('#customDataTable').append('<tr id="'+key+'"><td>' + key + '</td><td>' + value + '</td><td align="center"><a href=\"javascript:;\" onclick=\"deleteCustomDataField(\''+ accountId + '\',\'' + key +'\')">Delete</a></td></tr>');
-                    $('#newKey').val('');
-                    $('#newValue').val('');
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    popup.type('error').sticky(true).message('There was an error deleting the Custom Data Field.').show();
-                }
-            });
+                async: false,
+                data: { 'key': key, 'value': value }
+            }).responseText;
+            returnedValue = response;
+            if(returnedValue != value) {
+                $('#customDataTable tr[id=' + key + ']').remove()
+            }
+            $('#customDataTable').append('<tr id="'+key+'"><td>' + key + '</td><td>' + returnedValue + '</td><td align="center"><a href=\"javascript:;\" onclick=\"deleteCustomDataField(\''+ accountId + '\',\'' + key +'\')">Delete</a></td></tr>');
+            $('#newKey').val('');
+            $('#newValue').val('');
         });
     });
+    //Let's detect "Enter" key pressed in the New Value field.
     $(document).ready(function() {
         $("#newValue").keyup(function(event){
             if(event.keyCode == 13){
+                $('#newValue').blur();
                 $("#newCustomDataFieldButton").click();
             }
         })
     });
+    //Deletion of custom data fields will carried out using this jQuery call.
     function deleteCustomDataField(accountId, key) {
         var targetUrl = "/account/customData/"+accountId+"/"+key;
         $.ajax({
@@ -110,11 +118,12 @@
             contentType:'application/json; charset=utf-8',
             dataType:"json",
             data:"{}",
+            async: true,
             success: function(data, textStatus, jqXHR) {
-                $( "#"+ key).remove()
+                $('#customDataTable tr[id=' + key + ']').remove()
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                popup.type('error').sticky(true).message('There was an error deleting the Custom Data Field.').show();
+                alert('There was an error deleting the Custom Data Field.');
             }
         });
     }

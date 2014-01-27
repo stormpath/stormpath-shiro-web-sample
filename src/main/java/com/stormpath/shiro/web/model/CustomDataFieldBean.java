@@ -21,9 +21,9 @@ package com.stormpath.shiro.web.model;
 public class CustomDataFieldBean {
 
     private String key;
-    private String value;
+    private Object value;
 
-    public CustomDataFieldBean(String aKey, String aValue) {
+    public CustomDataFieldBean(String aKey, Object aValue) {
         this.key = aKey;
         this.value = aValue;
     }
@@ -32,7 +32,7 @@ public class CustomDataFieldBean {
         return key;
     }
 
-    public String getValue() {
+    public Object getValue() {
         return value;
     }
 }

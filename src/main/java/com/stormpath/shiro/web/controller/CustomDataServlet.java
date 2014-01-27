@@ -17,6 +17,9 @@
 package com.stormpath.shiro.web.controller;
 
 import com.stormpath.shiro.web.model.CustomDataBean;
+import com.stormpath.shiro.web.model.CustomDataFieldBean;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +40,7 @@ public class CustomDataServlet extends HttpServlet {
     private static final String SERVLET_URI = "/account/customData";
 
     /**
-     * Retrieval of custom data is handled here relying on the {@link StormpathService} to get it.
+     * Retrieval of custom data is handled here relying on the {@link CustomDataController} to get it.
      *
      * @param req	an {@link HttpServletRequest} object that contains the request the client has made
      *			of the servlet
@@ -53,20 +56,24 @@ public class CustomDataServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uri = req.getRequestURI();
         if(uri.startsWith(SERVLET_URI)) {
-            try {
-                Map account = org.apache.shiro.SecurityUtils.getSubject().getPrincipals().oneByType(java.util.Map.class);
-                String accountHref = account.get("href").toString();
-                String accountId = accountHref.substring(accountHref.lastIndexOf("/") + 1);
-                CustomDataBean customDataBean = StormpathService.getInstance().getCustomData(accountId);
+            String[] splittedUri = StringUtils.split(uri, '/');
+            if(splittedUri.length == 3) {
+                try {
+                    Map account = SecurityUtils.getSubject().getPrincipals().oneByType(java.util.Map.class);
+                    String accountHref = account.get("href").toString();
+                    String accountId = accountHref.substring(accountHref.lastIndexOf("/") + 1);
+                    CustomDataBean customDataBean = CustomDataController.getInstance().getCustomData(accountId);
 
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/account/customData.jsp");
-                req.setAttribute("customDataFields", customDataBean.getCustomDataFields());
-                req.setAttribute("accountId", accountId);
-
-                dispatcher.forward(req,resp);
-            } catch (Exception ex) {
-                logger.warn(ex.getMessage());
-                throw new ServletException(ex);
+                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/account/customData.jsp");
+                    req.setAttribute("customDataFields", customDataBean.getCustomDataFields());
+                    req.setAttribute("accountId", accountId);
+                    dispatcher.forward(req,resp);
+                } catch (Exception ex) {
+                    logger.warn(ex.getMessage());
+                    throw new ServletException(ex);
+                }
+            } else {
+                throw new ServletException("This servlet cannot handle this GET request: " + uri);
             }
         } else {
             throw new ServletException("This servlet cannot handle this GET request: " + uri);
@@ -74,13 +81,14 @@ public class CustomDataServlet extends HttpServlet {
     }
 
     /**
-     * Insertion of custom data fields is handled here relying on the {@link StormpathService} to actually do it.
+     * Insertion of custom data fields is handled here relying on the {@link CustomDataController} to actually do it. The
+     * updated custom data field value will be returned in the response so the UI can display it.
      *
      * @param req	an {@link HttpServletRequest} object that contains the request the client has made
      *			of the servlet
      *
-     * @param resp	an {@link HttpServletResponse} object that contains the response the servlet sends
-     *			to the client
+     * @param resp	an {@link HttpServletResponse} object that contains the field that has just been added/updated and
+     *              is sent to the client
      *
      * @exception IOException	if an input or output error is detected when the servlet handles
      *				the POST request
@@ -89,12 +97,20 @@ public class CustomDataServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uri = req.getRequestURI();
-        if(uri.startsWith(SERVLET_URI)) {
+        String[] splittedUri = StringUtils.split(uri, '/');
+        if(uri.startsWith(SERVLET_URI) && splittedUri.length == 4) {
             try {
-                String accounId = uri.substring(uri.lastIndexOf("/") + 1);
+                String accounId = splittedUri[3];
                 String key = req.getParameter("key");
                 String value = req.getParameter("value");
-                StormpathService.getInstance().addCustomDataField(accounId, key, value);
+                CustomDataFieldBean field = CustomDataController.getInstance().addCustomDataField(accounId, key, value);
+                try {
+                    resp.setContentType("application/json");
+                    resp.setCharacterEncoding("UTF-8");
+                    resp.getWriter().write(field.getValue().toString());
+                } catch (IOException e) {
+                    logger.error(e.getMessage());
+                }
             } catch (Exception ex) {
                 logger.warn(ex.getMessage());
                 throw new ServletException(ex);
@@ -105,7 +121,7 @@ public class CustomDataServlet extends HttpServlet {
     }
 
     /**
-     * Deletion of custom data fields is handled here relying on the {@link StormpathService} to actually do it.
+     * Deletion of custom data fields is handled here relying on the {@link CustomDataController} to actually do it.
      *
      * @param req	an {@link HttpServletRequest} object that contains the request the client has made
      *			of the servlet
@@ -120,11 +136,12 @@ public class CustomDataServlet extends HttpServlet {
      */
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uri = req.getRequestURI();
-        if(req.getRequestURI().startsWith(SERVLET_URI)) {
+        String[] splittedUri = StringUtils.split(uri, '/');
+        if(uri.startsWith(SERVLET_URI) && splittedUri.length == 5) {
             try {
-                String accounId = uri.substring(SERVLET_URI.length() + 1, uri.lastIndexOf("/"));
-                String customDataFieldKey = uri.substring(uri.lastIndexOf("/") + 1);
-                StormpathService.getInstance().deleteCustomDataField(accounId, customDataFieldKey);
+                String accounId = splittedUri[3];
+                String customDataFieldKey = splittedUri[4];
+                CustomDataController.getInstance().deleteCustomDataField(accounId, customDataFieldKey);
             } catch (Exception ex) {
                 logger.warn(ex.getMessage());
                 throw new ServletException(ex);
