@@ -43,7 +43,7 @@
     %>
     <c:out value="${account.givenName}"/></shiro:user>!
     ( <shiro:user><a href="<c:url value="/logout"/>">Log out</a></shiro:user>
-    <shiro:guest><a href="<c:url value="/login.jsp"/>">Log in</a> (sample accounts provided)</shiro:guest> )
+    <shiro:guest><a href="<c:url value="/login.jsp"/>">Log in</a> (sample accounts provided) or <a href="<c:url value="/account/register.jsp"/>">Register</a> </shiro:guest> )
 </p>
 
 <p>Welcome to the Stormpath + Apache Shiro Quickstart sample application.

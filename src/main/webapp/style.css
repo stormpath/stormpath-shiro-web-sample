@@ -42,3 +42,11 @@ img {
     background: #eee;
     border: thick black solid;
 }
+
+.divider{
+    position:relative;
+    left:35%;
+    top:0%;
+    bottom:0%;
+    border-left:2px solid lightgrey;
+}

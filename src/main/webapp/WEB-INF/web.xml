@@ -21,12 +21,21 @@
     <!-- Servlet handling custom data retrieval and edition -->
     <servlet>
         <servlet-name>CustomDataServlet</servlet-name>
-        <servlet-class>com.stormpath.shiro.web.controller.CustomDataServlet
+        <servlet-class>com.stormpath.shiro.web.servlet.CustomDataServlet
+        </servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RegistrationServlet</servlet-name>
+        <servlet-class>com.stormpath.shiro.web.servlet.RegistrationServlet
         </servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CustomDataServlet</servlet-name>
         <url-pattern>/account/customData/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegistrationServlet</servlet-name>
+        <url-pattern>/account/register/*</url-pattern>
     </servlet-mapping>
 
     <listener>

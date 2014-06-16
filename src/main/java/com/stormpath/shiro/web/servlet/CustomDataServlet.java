@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package com.stormpath.shiro.web.controller;
+package com.stormpath.shiro.web.servlet;
 
+import com.stormpath.shiro.web.controller.CustomDataController;
 import com.stormpath.shiro.web.model.CustomDataBean;
 import com.stormpath.shiro.web.model.CustomDataFieldBean;
 import org.apache.shiro.SecurityUtils;
@@ -40,7 +41,7 @@ public class CustomDataServlet extends HttpServlet {
     private static final String SERVLET_URI = "/account/customData";
 
     /**
-     * Retrieval of custom data is handled here relying on the {@link CustomDataController} to get it.
+     * Retrieval of custom data is handled here relying on the {@link com.stormpath.shiro.web.controller.CustomDataController} to get it.
      *
      * @param req	an {@link HttpServletRequest} object that contains the request the client has made
      *			of the servlet

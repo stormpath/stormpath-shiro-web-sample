@@ -18,6 +18,7 @@
 
 <html>
 <head>
+    <link type="text/css" rel="stylesheet" href="<c:url value="/style.css"/>"/>
     <title>Custom Data</title>
 </head>
 
