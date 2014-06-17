@@ -21,6 +21,11 @@ import com.stormpath.shiro.web.utils.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Google-specific Singleton {@link ProviderController}.
+ *
+ * @since 1.0.0
+ */
 public class GoogleController extends ProviderController {
 
     private static final Logger logger = LoggerFactory.getLogger(GoogleController.class);
@@ -28,7 +33,7 @@ public class GoogleController extends ProviderController {
     private static ProviderController controller = null;
 
     /**
-     * Let's make the constructor private so we can have a single GoogleController.
+     * Let's make the constructor private so we can have a single GoogleController instance.
      */
     private GoogleController() {
     }
@@ -40,8 +45,15 @@ public class GoogleController extends ProviderController {
         return controller;
     }
 
+    /**
+     * Returns a new Google-based directory creation request. See
+     * <a href="http://docs.stormpath.com/java/product-guide/#creating-a-google-directory">Creating a google directory</a>
+     *
+     * @return a new Google-based directory creation request.
+     */
     @Override
     public CreateProviderRequest getCreateProviderRequest() {
+        //ClientID, ClientSecret and RedirectUri retrieved from the configuration file.
         return Providers.GOOGLE.builder()
                 .setClientId(Configuration.getGoogleClientId())
                 .setClientSecret(Configuration.getGoogleClientSecret())

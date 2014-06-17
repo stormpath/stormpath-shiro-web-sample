@@ -24,19 +24,52 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+/**
+ * Google-specific {@link OauthFilter}. The Google redirectUri must be configured to be handled by this Filter. For example,
+ * in config.ini:
+ * <pre>
+ *     [Google]
+ *     clientId = ***your_google_client_id***
+ *     clientSecret = ***your_google_client_secret***
+ *     redirectUri = http://localhost:8080/googleOauthCallback
+ * </pre>
+ * and in shiro.ini:
+ * <pre>
+ *      [main]
+ *      googleOauth = com.stormpath.shiro.web.filter.GoogleFilter
+ *      #...
+ *      [urls]
+ *      /googleOauthCallback = googleOauth
+ * </pre>
+ *
+ * @since 1.0.0
+ */
 public class GoogleFilter extends OauthFilter {
     private static final Logger logger = LoggerFactory.getLogger(GoogleFilter.class);
 
+    /**
+     * Creates a new {@link GoogleAuthenticationToken} using the received authorization code.
+     * @param code the authorization code received from Google.
+     * @return a new {@link GoogleAuthenticationToken} using the received authorization code.
+     */
     @Override
-    protected AuthenticationToken getOauthAuthenticatingFilter(String code) {
+    protected AuthenticationToken getOauthAuthenticatingToken(String code) {
         return new GoogleAuthenticationToken(code);
     }
 
+    /**
+     * Returns the {@link GoogleController}.
+     * @return the {@link GoogleController}.
+     */
     @Override
     protected ProviderController getProviderController() {
         return GoogleController.getInstance();
     }
 
+    /**
+     * Returns a generic error message to be displayed when the login fails.
+     * @return a generic error message to be displayed when the login fails.
+     */
     @Override
     protected String getGenericErrorMessage() {
         return Constants.GOOGLE_LOGIN_ERROR;

@@ -28,21 +28,47 @@ import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
 
+/**
+ * Abstract controller consolidating the creation of Provider-based Directories in
+ * the <a href="http://www.stormpath.com">Stormpath</a> by means of the
+ * <a href="https://github.com/stormpath/stormpath-sdk-java">Stormpath Java SDK</a>.
+ * <p/>
+ * Different providers (like Google and Facebook) only need to sub-class this class in order to get their directories
+ * automatically created in Stormpath.
+ *
+ * @see GoogleController
+ * @see FacebookController
+ *
+ * @since 1.0.0
+ */
 public abstract class ProviderController extends AbstractController {
 
     private static final Logger logger = LoggerFactory.getLogger(ProviderController.class);
 
-    public boolean createProviderDirectory() {
+    /**
+     * Checks whether the Stormpath Application has an active Provider-based directory acting as an account store.
+     *
+     * @return true if an active Provider-based account store exists in the application; false otherwise.
+     */
+    public boolean hasProviderBasedAccountStore() {
         Application application = client.getResource(realm.getApplicationRestUrl(), Application.class);
 
         for(AccountStoreMapping accountStoreMapping : application.getAccountStoreMappings()) {
             AccountStore accountStore = accountStoreMapping.getAccountStore();
             if(accountStore.getHref().contains("directories")) {
                 if(((Directory)accountStore).getProvider().getProviderId().equals(getProviderId())) {
-                    return false;
+                    return true;
                 }
             }
         }
+        return false;
+    }
+
+    /**
+     * Creates a Provider-based directory in the application and applies it as an account store in the application.
+     */
+    public void createProviderAccountStore() {
+        Application application = client.getResource(realm.getApplicationRestUrl(), Application.class);
 
         Directory directory = client.instantiate(Directory.class);
         //Let's create a unique Dir name to avoid name conflicts when creating the dir in Stormpath.
@@ -61,12 +87,26 @@ public abstract class ProviderController extends AbstractController {
         accountStoreMapping.setDefaultGroupStore(false);
 
         application.createAccountStoreMapping(accountStoreMapping);
-
-        return true;
     }
 
+    /**
+     * Hook method to be implemented by concrete Provider-based subclass (like {@link com.stormpath.sdk.provider.GoogleProvider} and
+     * {@link com.stormpath.sdk.provider.FacebookProvider}).
+     * <p/>
+     * Returns a new {@link CreateProviderRequest provider-based directory creation request} instance.
+     *
+     * @return a new {@link CreateProviderRequest provider-based directory creation request} instance.
+     */
     public abstract CreateProviderRequest getCreateProviderRequest();
 
+    /**
+     * Hook method to be implemented by concrete Provider-based subclass (like {@link com.stormpath.sdk.provider.GoogleProvider} and
+     * {@link com.stormpath.sdk.provider.FacebookProvider}).
+     * <p/>
+     * Returns the Provider-specific Provider id; like "google" or "facebook".
+     *
+     * @return the Provider-specific Provider id; like "google" or "facebook".
+     */
     public abstract String getProviderId();
 
 }

@@ -15,6 +15,11 @@
  */
 package com.stormpath.shiro.web.model;
 
+/**
+ * Holder for registration data.
+ *
+ * @since 1.0.0
+ */
 public class RegistrationBean {
 
     private String email;

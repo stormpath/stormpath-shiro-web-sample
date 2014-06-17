@@ -21,6 +21,11 @@ import com.stormpath.shiro.web.utils.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Facebook-specific Singleton {@link ProviderController}.
+ *
+ * @since 1.0.0
+ */
 public class FacebookController extends ProviderController {
 
     private static final Logger logger = LoggerFactory.getLogger(FacebookController.class);
@@ -28,7 +33,7 @@ public class FacebookController extends ProviderController {
     private static ProviderController controller = null;
 
     /**
-     * Let's make the constructor private so we can have a single FacebookController.
+     * Let's make the constructor private so we can have a single FacebookController instance.
      */
     private FacebookController() {
     }
@@ -40,8 +45,14 @@ public class FacebookController extends ProviderController {
         return controller;
     }
 
+    /**
+     * Returns a new Facebook-based directory creation request. See
+     * <a href="http://docs.stormpath.com/java/product-guide/#creating-a-facebook-directory">Creating a facebook directory</a>
+     * @return a new Facebook-based directory creation request.
+     */
     @Override
     public CreateProviderRequest getCreateProviderRequest() {
+        //AppID and AppSecret are retrieved from the configuration file.
         return Providers.FACEBOOK.builder()
                 .setClientId(Configuration.getFacebookAppId())
                 .setClientSecret(Configuration.getFacebookAppSecret())
