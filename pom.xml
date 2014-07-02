@@ -35,7 +35,7 @@
         <!-- For the Maven Jetty plugin (mvn jetty:run) -->
         <jetty.version>8.1.5.v20120716</jetty.version>
         <shiro.version>1.2.3</shiro.version>
-        <stormpath.sdk.version>1.0.beta</stormpath.sdk.version>
+        <stormpath.sdk.version>1.0.RC2</stormpath.sdk.version>
         <stormpath.shiro.version>0.7.0-SNAPSHOT</stormpath.shiro.version>
         <velocity.tools.version>2.0</velocity.tools.version>
     </properties>
