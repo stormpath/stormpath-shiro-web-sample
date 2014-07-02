@@ -36,7 +36,8 @@
         <jetty.version>8.1.5.v20120716</jetty.version>
         <shiro.version>1.2.3</shiro.version>
         <stormpath.sdk.version>1.0.beta</stormpath.sdk.version>
-        <stormpath.shiro.version>0.6.0</stormpath.shiro.version>
+        <stormpath.shiro.version>0.7.0-SNAPSHOT</stormpath.shiro.version>
+        <velocity.tools.version>2.0</velocity.tools.version>
     </properties>
 
     <build>
@@ -78,9 +79,22 @@
             <version>${stormpath.shiro.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.stormpath.shiro</groupId>
+            <artifactId>stormpath-shiro-web</artifactId>
+            <version>${stormpath.shiro.version}</version>
+            <type>war</type>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
             <groupId>com.stormpath.sdk</groupId>
             <artifactId>stormpath-sdk-httpclient</artifactId>
             <version>${stormpath.sdk.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-tools</artifactId>
+            <version>${velocity.tools.version}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>

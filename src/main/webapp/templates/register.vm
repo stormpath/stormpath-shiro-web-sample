@@ -1,0 +1,83 @@
+#*
+ * Copyright 2014 Stormpath, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*#
+#set($subject = "Create an Account")
+#set($description = "Create a new account.")
+#set($bodyTag = "register")
+
+<div class="register">
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            <form class="bs-example form-horizontal" method="post" action="$urlFor.get("register.action")" >
+                <fieldset>
+                    <legend>Create a New Account</legend>
+                    #if ( $messages )
+                        <div class="alert alert-dismissable alert-danger register-fail">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            #foreach ($message in $messages)
+                                $message
+                            #end
+                        </div>
+                    #end
+                    <p>
+                        Registering for this site will create a new user account for you via
+                        <a href="https://stormpath.com">Stormpath</a>, then log you in
+                        automatically.
+                    </p>
+                    <div class="alert alert-dismissable alert-info">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>NOTE</strong> Your password must be between 8 and 100
+                        characters, and must contain lowercase letters, uppercase letters,
+                        and numbers.
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="col-lg-4 control-label">Email</label>
+                        <div class="col-lg-4">
+                            <input class="form-control" id="username" name="username" placeholder="Username" autofocus />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-lg-4 control-label">Password</label>
+                        <div class="col-lg-4">
+                            <input type="password" class="form-control"  id="password" name="password" placeholder="Password" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-10 col-lg-offset-4">
+                            <button type="submit" class="btn btn-primary">Register</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+            <h2>A Note About Stormpath Security</h2>
+            <p>
+                In a real environment, you should <b>only deploy your application</b>
+                behind SSL / TLS to avoid having user credentials sent in plain text
+                over the network.
+            </p>
+            <p>
+                Stormpath user creation is incredibly secure, is not susceptible to any
+                known vulnerabilities (MITM, hashing issues, replay attacks, etc.), and
+                provides you with a number of options to improve security (including
+                built-in email verification, among other things).  We will not verify
+                your account by email now, but this can be easily enabled.
+            </p>
+            <p class="last-p">
+                Stormpath can also be configured to allow for weaker (or force stronger)
+                passwords, so it can fit into any application workflow.
+            </p>
+        </div>
+    </div>
+</div>
