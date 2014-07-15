@@ -50,8 +50,11 @@
     This page represents the home page of any web application.</p>
 
 <shiro:user><p>Visit your <a href="<c:url value="/account"/>">account page</a>.</p></shiro:user>
-<shiro:guest><p>If you want to access the user-only <a href="<c:url value="/account"/>">account page</a>,
-    you will need to log-in first.</p></shiro:guest>
+<shiro:user><p>Edit your <a href="/account/customData">account's custom data</a>.</p></shiro:user>
+
+<shiro:guest><p>If you want to access the user-only <a href="<c:url value="/account"/>">account page</a> or <a href="<c:url
+value="/account/customData"/>">custom data page</a>, you will need to log-in first.</p></shiro:guest>
+
 
 <h2>Roles</h2>
 
@@ -74,6 +77,12 @@
     <shiro:lacksRole name="${SCHWARTZ_MASTERS}">Schwartz Masters<br/></shiro:lacksRole>
 </p>
 
+<h2>Permissions</h2>
+
+<ul>
+    <li>You may <shiro:lacksPermission name="ship:NCC-1701-D:command"><b>NOT</b> </shiro:lacksPermission> command the <code>NCC-1701-D</code> Starship!</li>
+    <li>You may <shiro:lacksPermission name="user:${account.username}:edit"><b>NOT</b> </shiro:lacksPermission> edit the ${account.username} user!</li>
+</ul>
 
 </body>
 </html>

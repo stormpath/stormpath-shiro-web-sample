@@ -34,7 +34,9 @@
     <properties>
         <!-- For the Maven Jetty plugin (mvn jetty:run) -->
         <jetty.version>8.1.5.v20120716</jetty.version>
-        <shiro.version>1.2.2</shiro.version>
+        <shiro.version>1.2.3</shiro.version>
+        <stormpath.sdk.version>1.0.beta</stormpath.sdk.version>
+        <stormpath.shiro.version>0.6.0</stormpath.shiro.version>
     </properties>
 
     <build>
@@ -73,12 +75,12 @@
         <dependency>
             <groupId>com.stormpath.shiro</groupId>
             <artifactId>stormpath-shiro-core</artifactId>
-            <version>0.4.0</version>
+            <version>${stormpath.shiro.version}</version>
         </dependency>
         <dependency>
             <groupId>com.stormpath.sdk</groupId>
             <artifactId>stormpath-sdk-httpclient</artifactId>
-            <version>0.8.1</version>
+            <version>${stormpath.sdk.version}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
