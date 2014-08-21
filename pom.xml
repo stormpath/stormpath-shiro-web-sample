@@ -27,7 +27,7 @@
 
     <groupId>com.stormpath.samples</groupId>
     <artifactId>shiro-web-sample</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.6.0-SNAPSHOT</version>
     <name>Stormpath :: Shiro :: Web Sample</name>
     <packaging>war</packaging>
 
