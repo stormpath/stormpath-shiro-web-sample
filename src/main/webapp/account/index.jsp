@@ -1,5 +1,6 @@
+<%@ page import="com.stormpath.shiro.servlet.conf.UrlFor" %>
 <%--
-  ~ Copyright (c) 2012 Stormpath, Inc. and contributors
+  ~ Copyright (c) 2014 Stormpath, Inc. and contributors
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -25,9 +26,9 @@
 
 <p>You are currently logged in.</p>
 
-<p><a href="<c:url value="/home.jsp"/>">Return to the home page.</a></p>
+<p><a href="<c:url value="<%=UrlFor.get("home")%>"/>">Return to the home page.</a></p>
 
-<p><a href="<c:url value="/logout"/>">Log out.</a></p>
+<p><a href="<c:url value="<%=UrlFor.get("logout_forwarder")%>"/>">Log out.</a></p>
 
 </body>
 </html>

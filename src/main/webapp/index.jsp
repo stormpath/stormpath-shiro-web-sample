@@ -1,5 +1,6 @@
+<%@ page import="com.stormpath.shiro.servlet.conf.UrlFor" %>
 <%--
-  ~ Copyright (c) 2012 Stormpath, Inc. and contributors
+  ~ Copyright (c) 2014 Stormpath, Inc. and contributors
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -15,4 +16,4 @@
   --%>
 
 <%-- Forward the user to the home page --%>
-<jsp:forward page="home.jsp"/>
+<jsp:forward page="<%=UrlFor.get("home")%>"/>

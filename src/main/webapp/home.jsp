@@ -1,5 +1,6 @@
+<%@ page import="com.stormpath.shiro.servlet.conf.UrlFor" %>
 <%--
-  ~ Copyright (c) 2012 Stormpath, Inc. and contributors
+  ~ Copyright (c) 2014 Stormpath, Inc. and contributors
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -42,15 +43,15 @@
 
     %>
     <c:out value="${account.givenName}"/></shiro:user>!
-    ( <shiro:user><a href="<c:url value="/logout"/>">Log out</a></shiro:user>
-    <shiro:guest><a href="<c:url value="/login.jsp"/>">Log in</a> (sample accounts provided)</shiro:guest> )
+    ( <shiro:user><a href="<c:url value="<%=UrlFor.get("logout_forwarder")%>"/>">Log out</a></shiro:user>
+    <shiro:guest><a href="<c:url value="<%=UrlFor.get("login_forwarder")%>"/>">Log in</a> (sample accounts provided)</shiro:guest> )
 </p>
 
 <p>Welcome to the Stormpath + Apache Shiro Quickstart sample application.
     This page represents the home page of any web application.</p>
 
-<shiro:user><p>Visit your <a href="<c:url value="/account"/>">account page</a>.</p></shiro:user>
-<shiro:guest><p>If you want to access the user-only <a href="<c:url value="/account"/>">account page</a>,
+<shiro:user><p>Visit your <a href="<c:url value="<%=UrlFor.get("account")%>"/>">account page</a>.</p></shiro:user>
+<shiro:guest><p>If you want to access the user-only <a href="<c:url value="<%=UrlFor.get("account")%>"/>">account page</a>,
     you will need to log-in first.</p></shiro:guest>
 
 <h2>Roles</h2>
