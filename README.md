@@ -28,4 +28,5 @@ Run it:
 
 - Upgraded Shiro dependency to version 1.2.3
 - Upgraded Stormpath SDK dependency to version 1.0.RC2
-- Upgraded Stormpath Shiro dependency to version 0.6.0
+- Upgraded Stormpath Shiro dependency to version 0.7.0
+- [Issue 8](https://github.com/stormpath/stormpath-shiro-web-sample/issues/8): Showcase the use of [ID Site](http://docs.stormpath.com/guides/using-id-site/) via Stormpath Shiro Plugin.
