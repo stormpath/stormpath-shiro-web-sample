@@ -36,7 +36,7 @@
         <jetty.version>8.1.5.v20120716</jetty.version>
         <shiro.version>1.2.3</shiro.version>
         <stormpath.sdk.version>1.0.RC2</stormpath.sdk.version>
-        <stormpath.shiro.version>0.6.0</stormpath.shiro.version>
+        <stormpath.shiro.version>0.7.0-SNAPSHOT</stormpath.shiro.version>
     </properties>
 
     <build>
@@ -111,6 +111,11 @@
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-web</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
             <version>${shiro.version}</version>
         </dependency>
         <dependency>

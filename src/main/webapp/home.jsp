@@ -26,7 +26,7 @@
 <html>
 <head>
     <link type="text/css" rel="stylesheet" href="<c:url value="/style.css"/>"/>
-    <title>Stormpath + Apache Shiro Quickstart</title>
+    <title>Stormpath + Apache Shiro Quickstart: App 1</title>
 </head>
 <body>
 
