@@ -29,7 +29,7 @@ Contributions, bug reports and issues are very welcome. Stormpath regularly main
 You can make your own contributions by forking the develop branch of this
 repository, making your changes, and issuing pull request on the develop branch.
 
-### Build Instructions ###
+## Build Instructions ##
 
 This project requires Maven 3 to build. Run the following from a command prompt:
 
