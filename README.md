@@ -14,7 +14,6 @@ Stormpath offers usage documentation and support for the Apache Shiro Plugin for
 
 Below are some resources you might find useful!
 - [The Apache Shiro Plugin for Stormpath](https://github.com/stormpath/stormpath-shiro)
-- [Stormpath-Shiro Sample Webapp](https://github.com/stormpath/stormpath-shiro-web-sample)
 - [User Permissions with Apache Shiro and Stormpath](https://stormpath.com/blog/user-permissions-apache-shiro-and-stormpath/)
 
 **Stormpath Java Support**
